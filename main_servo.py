@@ -23,22 +23,12 @@ start_time = time.ticks_ms()
 def millis():
     return time.ticks_ms() - start_time
 
-def servo_Map(x, in_min, in_max, out_min, out_max):
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
- 
-def servo_Angle(angle):
-    if angle < 0:
-        angle = 0
-    if angle > 180:
-        angle = 180
-    s1.goto(round(servo_Map(angle,0,180,0,1024))) # Convert range value to angle value
-
 print('Version: Read Push Button and Blink LED independance')
 
 #SETUP SECTION
 led = Pin(2, Pin.OUT)
 gButton = PushButton (5)
-s1 = Servo(13)       # Servo pin is connected to GPIO13
+myServo = Servo(pin_id=13)       # Servo pin is connected to GPIO13
 
 #LOOP SECTION
 while True:
@@ -73,5 +63,5 @@ while True:
             elif servoDirOld == 1 and servoDir == 0:
                 print ("Servo Turn Left")
             servoDirOld = servoDir
-        servo_Angle(angleServo)
+        myServo.write(angleServo)
      
